@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>search</title>
+    <link rel="stylesheet" type="text/css" href="/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/themes/icon.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#poetButton").linkbutton({
+                onClick: function () {
+                    $('#dg').datagrid({
+                        url: '/search',
+                        remoteSort: false,
+                        singleSelect: true,
+                        nowrap: false,
+                        fitColumns: true,
+                        striped: true,
+                        pagination: true,
+                        pageSize: 5,
+                        pageList: [5, 10, 15, 20],
+                        columns: [[
+                            {field: 'title', title: '题目'},
+                            {
+                                field: 'poet',
+                                title: '作者',
+                                formatter:function (value,row,index){
+                                        return row.poet.name;
+                                        },
+                            },
+
+                            {field: 'content', title: '内容'}
+                        ]]
+                    });
+
+                    $('#dg').datagrid('load',{
+                        keyword: $("#keyword").val(),
+                    });
+                },
+            });
+
+
+
+        });
+
+    </script>
+</head>
+
+<body>
+<form id="poet" method="post">
+    <div>
+        <label>请输入想要搜索的诗句:</label>
+        <input class="easyui-validatebox" id="keyword" type="text" data-options="required:true"/>
+    </div>
+</form>
+<a id="poetButton">搜索</a>
+<table id="dg"></table>
+</body>
+
+</html>
